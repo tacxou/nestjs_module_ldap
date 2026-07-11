@@ -37,7 +37,7 @@ export class LdapCoreModule {
    * @param connection string
    * @returns DynamicModule
    */
-  public static forRootAsync(options: LdapModuleAsyncOptions, connection: string): DynamicModule {
+  public static forRootAsync(options: LdapModuleAsyncOptions, connection?: string): DynamicModule {
     const ldapConnectionProvider: Provider = {
       provide: getLdapConnectionToken(connection),
       useFactory(options: LdapModuleOptions) {
@@ -70,7 +70,12 @@ export class LdapCoreModule {
       return [this.createAsyncOptionsProvider(options, connection)]
     }
 
-    return [this.createAsyncOptionsProvider(options, connection), { provide: options.useClass, useClass: options.useClass }]
+    const useClass = options.useClass
+    if (!useClass) {
+      throw new Error('Invalid configuration. Must provide useFactory, useClass or useExisting')
+    }
+
+    return [this.createAsyncOptionsProvider(options, connection), { provide: useClass, useClass }]
   }
 
   /**
@@ -93,12 +98,17 @@ export class LdapCoreModule {
       }
     }
 
+    const injectToken = options.useClass ?? options.useExisting
+    if (!injectToken) {
+      throw new Error('Invalid configuration. Must provide useFactory, useClass or useExisting')
+    }
+
     return {
       provide: getLdapOptionsToken(connection),
       async useFactory(optionsFactory: LdapModuleOptionsFactory): Promise<LdapModuleOptions> {
         return await optionsFactory.createLdapModuleOptions()
       },
-      inject: [options.useClass || options.useExisting],
+      inject: [injectToken],
     }
   }
 }

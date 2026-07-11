@@ -2,11 +2,11 @@ import { LDAP_MODULE_CONNECTION, LDAP_MODULE_CONNECTION_TOKEN, LDAP_MODULE_OPTIO
 import { LdapModuleOptions } from './ldap.interfaces'
 import { LdapManager } from './ldap.manager'
 
-export function getLdapOptionsToken(connection: string): string {
+export function getLdapOptionsToken(connection?: string): string {
   return `${connection || LDAP_MODULE_CONNECTION}_${LDAP_MODULE_OPTIONS_TOKEN}`
 }
 
-export function getLdapConnectionToken(connection: string): string {
+export function getLdapConnectionToken(connection?: string): string {
   return `${connection || LDAP_MODULE_CONNECTION}_${LDAP_MODULE_CONNECTION_TOKEN}`
 }
 
