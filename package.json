@@ -1,8 +1,8 @@
 {
-  "name": "@the-software-compagny/nestjs_module_ldap",
+  "name": "@tacxou/nestjs_module_ldap",
   "version": "0.0.2",
   "description": "LDAP module for NestJS Framework",
-  "repository": "https://github.com/The-Software-Compagny/nestjs_module_ldap.git",
+  "repository": "https://github.com/tacxou/nestjs_module_ldap.git",
   "author": "tacxou <12997062+tacxou@users.noreply.github.com> (https://github.com/tacxou)",
   "contributors": [
     {
@@ -12,7 +12,7 @@
     },
     {
       "name": "Contributors",
-      "url": "https://github.com/The-Software-Compagny/nestjs_module_ldap/graphs/contributors"
+      "url": "https://github.com/tacxou/nestjs_module_ldap/graphs/contributors"
     }
   ],
   "license": "MIT",

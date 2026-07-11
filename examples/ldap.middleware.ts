@@ -1,6 +1,6 @@
 import { Injectable, NestMiddleware, Scope } from '@nestjs/common'
-import { InjectLdap } from '@the-software-compagny/nestjs_module_ldap'
-import { LdapManager } from '@the-software-compagny/nestjs_module_ldap'
+import { InjectLdap } from '@tacxou/nestjs_module_ldap'
+import { LdapManager } from '@tacxou/nestjs_module_ldap'
 import { NextFunction, Request, Response } from 'express'
 import { CipherCCMTypes, CipherGCMTypes, createDecipheriv } from 'crypto'
 import { ConfigService } from '@nestjs/config'
