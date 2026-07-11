@@ -49,7 +49,7 @@ export class LdapCoreModule {
     return {
       module: LdapCoreModule,
       imports: options.imports,
-      providers: [...this.createAsyncProviders(options, connection), ldapConnectionProvider],
+      providers: [...LdapCoreModule.createAsyncProviders(options, connection), ldapConnectionProvider],
       exports: [ldapConnectionProvider],
     }
   }
@@ -67,7 +67,7 @@ export class LdapCoreModule {
     }
 
     if (options.useExisting || options.useFactory) {
-      return [this.createAsyncOptionsProvider(options, connection)]
+      return [LdapCoreModule.createAsyncOptionsProvider(options, connection)]
     }
 
     const useClass = options.useClass
@@ -75,7 +75,7 @@ export class LdapCoreModule {
       throw new Error('Invalid configuration. Must provide useFactory, useClass or useExisting')
     }
 
-    return [this.createAsyncOptionsProvider(options, connection), { provide: useClass, useClass }]
+    return [LdapCoreModule.createAsyncOptionsProvider(options, connection), { provide: useClass, useClass }]
   }
 
   /**

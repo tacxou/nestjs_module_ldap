@@ -5,8 +5,8 @@ export class LdapManager {
   protected logger: Logger = new Logger(LdapManager.name)
 
   private _initialized: boolean = false
-  private _defaultClient!: String | Symbol
-  private _clients: Map<String | Symbol, Client> = new Map()
+  private _defaultClient!: string | symbol
+  private _clients: Map<string | symbol, Client> = new Map()
 
   public constructor(private readonly _options: LdapModuleOptionsConfig) {
     for (const client of _options.clients) {
@@ -30,7 +30,7 @@ export class LdapManager {
     this._initialized = true
   }
 
-  public get clients(): Map<String | Symbol, Client> {
+  public get clients(): Map<string | symbol, Client> {
     return this._clients
   }
 
@@ -47,7 +47,7 @@ export class LdapManager {
     return this._initialized
   }
 
-  public getClient<T = {}>(name: String | Symbol): Client & T {
+  public getClient<T = Record<string, never>>(name: string | symbol): Client & T {
     if (!this.clients.has(name)) {
       throw new Error(`LDAP Connection ${name.toString()} not found`)
     }
