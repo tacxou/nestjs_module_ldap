@@ -1,5 +1,5 @@
-import { getLdapConnectionToken } from './ldap.utils'
 import { InjectLdap } from './ldap.decorators'
+import { getLdapConnectionToken } from './ldap.utils'
 
 describe('InjectLdap', () => {
   it('returns a Nest parameter decorator for the default connection', () => {

@@ -110,9 +110,7 @@ describe('LdapCoreModule', () => {
 
   describe('createAsyncProviders', () => {
     it('throws when no async strategy is provided', () => {
-      expect(() => LdapCoreModule.createAsyncProviders({})).toThrow(
-        'Invalid configuration. Must provide useFactory, useClass or useExisting',
-      )
+      expect(() => LdapCoreModule.createAsyncProviders({})).toThrow('Invalid configuration. Must provide useFactory, useClass or useExisting')
     })
 
     it('registers the options factory class when useClass is selected', () => {

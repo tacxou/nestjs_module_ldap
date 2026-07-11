@@ -1,7 +1,7 @@
 import { Client } from 'ldapts'
 import { LDAP_MODULE_CONNECTION, LDAP_MODULE_CONNECTION_TOKEN, LDAP_MODULE_OPTIONS_TOKEN } from './ldap.constants'
-import { createLdapConnection, getLdapConnectionToken, getLdapOptionsToken } from './ldap.utils'
 import { LdapManager } from './ldap.manager'
+import { createLdapConnection, getLdapConnectionToken, getLdapOptionsToken } from './ldap.utils'
 
 const mockedClient = Client as jest.MockedClass<typeof Client>
 
@@ -12,9 +12,7 @@ describe('ldap.utils', () => {
 
   describe('getLdapOptionsToken', () => {
     it('returns the default options token when connection is omitted', () => {
-      expect(getLdapOptionsToken(undefined)).toBe(
-        `${LDAP_MODULE_CONNECTION}_${LDAP_MODULE_OPTIONS_TOKEN}`,
-      )
+      expect(getLdapOptionsToken(undefined)).toBe(`${LDAP_MODULE_CONNECTION}_${LDAP_MODULE_OPTIONS_TOKEN}`)
     })
 
     it('returns a namespaced options token for a named connection', () => {
@@ -24,9 +22,7 @@ describe('ldap.utils', () => {
 
   describe('getLdapConnectionToken', () => {
     it('returns the default connection token when connection is omitted', () => {
-      expect(getLdapConnectionToken(undefined)).toBe(
-        `${LDAP_MODULE_CONNECTION}_${LDAP_MODULE_CONNECTION_TOKEN}`,
-      )
+      expect(getLdapConnectionToken(undefined)).toBe(`${LDAP_MODULE_CONNECTION}_${LDAP_MODULE_CONNECTION_TOKEN}`)
     })
 
     it('returns a namespaced connection token for a named connection', () => {

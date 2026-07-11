@@ -1,17 +1,15 @@
 import { Injectable, NestMiddleware, Scope } from '@nestjs/common'
-import { InjectLdap } from '@tacxou/nestjs_module_ldap'
-import { LdapManager } from '@tacxou/nestjs_module_ldap'
-import { NextFunction, Request, Response } from 'express'
-import { CipherCCMTypes, CipherGCMTypes, createDecipheriv } from 'crypto'
 import { ConfigService } from '@nestjs/config'
+import { InjectLdap, LdapManager } from '@tacxou/nestjs_module_ldap'
+import { CipherCCMTypes, CipherGCMTypes, createDecipheriv } from 'crypto'
+import { NextFunction, Request, Response } from 'express'
 
 @Injectable({ scope: Scope.REQUEST })
 export class LdapMiddleware implements NestMiddleware {
   public constructor(
     @InjectLdap() private readonly ldap: LdapManager,
     private readonly config: ConfigService,
-  ) {
-  }
+  ) {}
 
   public async use(req: Request, _: Response, next: NextFunction) {
     const decipher = createDecipheriv(

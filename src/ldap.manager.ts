@@ -21,9 +21,7 @@ export class LdapManager {
   public async initialize(): Promise<void> {
     for (const client of this._options.clients) {
       if (typeof client.bind === 'object' && client.bind.dn) {
-        await this.clients
-          .get(client.name)
-          .bind(client.bind.dn, client.bind.password, client.bind.controls)
+        await this.clients.get(client.name).bind(client.bind.dn, client.bind.password, client.bind.controls)
       }
     }
     this._initialized = true

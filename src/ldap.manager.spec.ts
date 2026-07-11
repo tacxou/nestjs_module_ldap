@@ -58,11 +58,7 @@ describe('LdapManager', () => {
 
     await manager.initialize()
 
-    expect(manager.getClient('bound').bind).toHaveBeenCalledWith(
-      'cn=admin,dc=example,dc=com',
-      'secret',
-      undefined,
-    )
+    expect(manager.getClient('bound').bind).toHaveBeenCalledWith('cn=admin,dc=example,dc=com', 'secret', undefined)
     expect(manager.getClient('anonymous').bind).not.toHaveBeenCalled()
     expect(manager.initialized).toBe(true)
   })

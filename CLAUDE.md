@@ -57,9 +57,9 @@ terminé, lancer et faire passer au vert :
    ```bash
    yarn build
    ```
-2. **Lint** (si ESLint est installé localement) :
+2. **Lint** :
    ```bash
-   yarn eslint src --ext .ts
+   yarn lint
    ```
 
 Règles : ne jamais contourner un hook ni un échec (`--no-verify` interdit). Si un
@@ -84,7 +84,7 @@ Respecter strictement les conventions TypeScript et NestJS.
   sans signaler un bump **MAJOR**.
 
 **Style**
-- TypeScript strict sur les API publiques, pas de `any` implicite (ESLint `no-explicit-any`).
+- TypeScript strict sur les API publiques, pas de `any` implicite (Biome `noExplicitAny`).
 - Injection de dépendances Nest, un fichier = une responsabilité.
 - **Imports** : classes injectées et symboles Nest en **import valeur** (DI + `emitDecoratorMetadata`) ;
   `import type` pour les types purs sans métadonnées runtime. Voir `.cursor/rules/nestjs-library-imports.mdc`.

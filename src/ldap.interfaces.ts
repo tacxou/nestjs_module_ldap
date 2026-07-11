@@ -1,4 +1,4 @@
-import { ModuleMetadata, Type } from '@nestjs/common'
+import { InjectionToken, ModuleMetadata, Type } from '@nestjs/common'
 import { ClientOptions, Control, DN, SaslMechanism } from 'ldapts'
 
 /**
@@ -52,8 +52,8 @@ export interface LdapModuleOptionsFactory {
  * @export
  */
 export interface LdapModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
-  inject?: any[]
+  inject?: InjectionToken[]
   useClass?: Type<LdapModuleOptionsFactory>
   useExisting?: Type<LdapModuleOptionsFactory>
-  useFactory?: (...args: any[]) => Promise<LdapModuleOptions> | LdapModuleOptions
+  useFactory?: (...args: unknown[]) => Promise<LdapModuleOptions> | LdapModuleOptions
 }

@@ -10,9 +10,11 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/org/tacxou"><img src="https://img.shields.io/npm/v/@tacxou/nestjs_module_ldap.svg" alt="NPM Version" /></a>
-  <a href="https://www.npmjs.com/org/tacxou"><img src="https://img.shields.io/npm/l/@tacxou/nestjs_module_ldap.svg" alt="Package License" /></a>
+  <a href="https://www.npmjs.com/package/@tacxou/nestjs_module_ldap"><img src="https://img.shields.io/npm/v/@tacxou/nestjs_module_ldap.svg" alt="NPM Version" /></a>
+  <a href="https://www.npmjs.com/package/@tacxou/nestjs_module_ldap"><img src="https://img.shields.io/npm/l/@tacxou/nestjs_module_ldap.svg" alt="Package License" /></a>
+  <a href="https://www.npmjs.com/package/@tacxou/nestjs_module_ldap"><img src="https://img.shields.io/npm/dm/@tacxou/nestjs_module_ldap.svg" alt="NPM Downloads" /></a>
   <a href="https://github.com/tacxou/nestjs_module_ldap/actions/workflows/ci.yml"><img src="https://github.com/tacxou/nestjs_module_ldap/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://codecov.io/gh/tacxou/nestjs_module_ldap"><img src="https://codecov.io/gh/tacxou/nestjs_module_ldap/graph/badge.svg?token=f16RTFlxTY" alt="codecov" /></a>
 </p>
 
 ## Overview
@@ -241,7 +243,9 @@ yarn install
 yarn test          # unit tests
 yarn test:coverage # tests with coverage report
 yarn build         # compile TypeScript to dist/
-yarn lint          # ESLint on src/
+yarn lint          # Biome check (lint + format)
+yarn format        # Biome format only
+yarn check         # Biome check with auto-fix
 ```
 
 ## License

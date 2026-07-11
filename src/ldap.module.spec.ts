@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing'
 import { InjectLdap } from './ldap.decorators'
-import { LdapModule } from './ldap.module'
 import { LdapManager } from './ldap.manager'
+import { LdapModule } from './ldap.module'
 import { getLdapConnectionToken } from './ldap.utils'
 
 describe('LdapModule', () => {
