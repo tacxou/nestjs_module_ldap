@@ -1,6 +1,6 @@
 {
   "name": "@tacxou/nestjs_module_ldap",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "LDAP module for NestJS Framework",
   "repository": "https://github.com/tacxou/nestjs_module_ldap.git",
   "author": "tacxou <12997062+tacxou@users.noreply.github.com> (https://github.com/tacxou)",
