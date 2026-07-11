@@ -39,7 +39,10 @@ nestjs_module_ldap/
 │   ├── ldap.constants.ts
 │   └── index.ts           # Barrel — tout export public passe par ici
 ├── examples/              # Exemples d'intégration (non publiés sur npm)
-├── docs/conventions/      # Conventions partagées (commits, etc.)
+├── docs/
+│   ├── assets/            # Logos SVG versionnés (lockups 2a / 2b, icône bolt-split)
+│   ├── branding.md        # Identité visuelle du package
+│   └── conventions/       # Conventions partagées (commits, etc.)
 ├── .github/workflows/     # CI (publication npm sur release GitHub)
 ├── package.json
 ├── tsconfig.json

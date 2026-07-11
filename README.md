@@ -1,7 +1,5 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank">
-    <img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" />
-  </a>
+  <img src="docs/assets/logo-lockup-2b.svg" width="560" alt="nestjs ldap — LDAP directory module for NestJS" />
 </p>
 
 <p align="center">

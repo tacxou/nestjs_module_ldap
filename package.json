@@ -20,7 +20,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.build.json",
-    "postbuild": "cpr README.md dist/README.md && cpr LICENSE dist/LICENSE && cpr package.json dist/package.json",
+    "postbuild": "cpr README.md dist/README.md && cpr LICENSE dist/LICENSE && cpr package.json dist/package.json && cpr docs/assets dist/docs/assets",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "lint": "biome check .",
