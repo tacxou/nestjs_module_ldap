@@ -20,7 +20,7 @@ export class LdapCoreModule {
 
     const ldapConnectionProvider: Provider = {
       provide: getLdapConnectionToken(connection),
-      useValue: createLdapConnection(options),
+      useFactory: () => createLdapConnection(options),
     }
 
     return {
