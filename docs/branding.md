@@ -1,28 +1,22 @@
 # Branding — `@tacxou/nestjs_module_ldap`
 
-Visual identity for the package. **Canonical source:** the versioned SVG files in
+Visual identity for the package. **Canonical source:** the versioned assets in
 [`docs/assets/`](assets/).
 
-## Lockups in use
+## Assets
 
-| Variant | File | Usage |
+| Asset | Format | Usage |
 | --- | --- | --- |
-| **2b** — horizontal | [`logo-lockup-2b.svg`](assets/logo-lockup-2b.svg) | README header, npm package page, wide banners |
-| **2a** — stacked | [`logo-lockup-2a.svg`](assets/logo-lockup-2a.svg) | Social cards, square layouts, centered hero blocks |
-| Icon only | [`logo-icon-bolt.svg`](assets/logo-icon-bolt.svg) | Favicon, avatars, compact UI chrome |
+| [`logo-lockup-2b.svg`](assets/logo-lockup-2b.svg) | SVG | Source lockup (horizontal) |
+| [`logo-lockup-2b.png`](assets/logo-lockup-2b.png) | PNG | README header, npm package page, wide banners |
+| [`logo-icon-bolt.png`](assets/logo-icon-bolt.png) | PNG | Favicon, avatars, compact UI chrome |
 
 ### 2b — horizontal lockup
 
 Primary lockup: bolt-split mark + wordmark **nestjs ⚡ ldap** + tagline
 *LDAP directory module for NestJS*.
 
-![Lockup 2b](assets/logo-lockup-2b.svg)
-
-### 2a — stacked lockup
-
-Centered variant with tagline *One bolt, two worlds — framework meets directory*.
-
-![Lockup 2a](assets/logo-lockup-2a.svg)
+![Lockup 2b](assets/logo-lockup-2b.png)
 
 ## Mark
 
@@ -54,5 +48,4 @@ Typography: [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) (
 
 ## Updating the mark
 
-Edit the SVG files under `docs/assets/` directly, then verify the README header and this page.
-Do not rely on local-only design drafts — they are not part of the repository.
+Edit `docs/assets/logo-lockup-2b.svg`, then run `make logos` to regenerate `logo-lockup-2b.png` (GitHub README does not reliably render SVG). Update `logo-icon-bolt.png` manually when the bolt-split icon changes.

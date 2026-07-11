@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/logo-lockup-2b.svg" width="560" alt="nestjs ldap — LDAP directory module for NestJS" />
+  <img src="docs/assets/logo-lockup-2b.png" width="560" alt="nestjs ldap — LDAP directory module for NestJS" />
 </p>
 
 <p align="center">
@@ -238,12 +238,15 @@ Adapt it to your authentication flow and secret management practices.
 
 ```bash
 yarn install
-yarn test          # unit tests
-yarn test:coverage # tests with coverage report
-yarn build         # compile TypeScript to dist/
-yarn lint          # Biome check (lint + format)
-yarn format        # Biome format only
-yarn check         # Biome check with auto-fix
+make help           # list available targets
+make test           # unit tests
+make test-coverage  # tests with coverage report
+make build          # compile TypeScript to dist/
+make lint           # Biome check (lint + format)
+make format         # Biome format only
+make check          # Biome check with auto-fix
+make verify         # lint + test + build (CI parity)
+make logos          # regenerate logo-lockup-2b.png from SVG
 ```
 
 ## License

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="560" height="184" viewBox="0 0 560 184" role="img" aria-label="nestjs ldap  LDAP directory module for NestJS">
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="184" viewBox="0 0 560 184" role="img" aria-label="nestjs ldap  LDAP directory module for NestJS">
   <title>nestjs ldap lockup 2b</title>
   <rect width="560" height="184" rx="20" fill="#141418"/>
   <g transform="translate(48,48)">
@@ -34,7 +34,7 @@
   </g>
   <text x="164" y="88" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="27" font-weight="700" letter-spacing="-0.01em">
     <tspan fill="#e0234e">nestjs</tspan>
-    <tspan fill="#f5f4ef" dx="9">¡</tspan>
+    <tspan fill="#f5f4ef" dx="9">&#9889;</tspan>
     <tspan fill="#f5f4ef" dx="9">ldap</tspan>
   </text>
   <text x="164" y="118" font-family="'Sora', system-ui, -apple-system, sans-serif" font-size="13.5" fill="#8b8a93">LDAP directory module for NestJS</text>
