@@ -32,7 +32,7 @@ npm install @tacxou/nestjs_module_ldap ldapts
 yarn add @tacxou/nestjs_module_ldap ldapts
 ```
 
-Supported NestJS versions: `^6`, `^7`, `^8`, `^9`, and `^10`.
+Supported NestJS versions: `^6`, `^7`, `^8`, `^9`, `^10`, and `^11`.
 
 ## Quick start
 
