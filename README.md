@@ -241,11 +241,16 @@ yarn install
 make help           # list available targets
 make test           # unit tests
 make test-coverage  # tests with coverage report
+make test-scripts   # tests for changelog, packaging and release tooling
+make typecheck      # TypeScript validation without output
 make build          # compile TypeScript to dist/
+make package        # audited tarball + SHA-256 in .artifacts/npm/
+make docs-build     # build the VitePress documentation site
+make changelog-check # validate generated release history
 make lint           # Biome check (lint + format)
 make format         # Biome format only
 make check          # Biome check with auto-fix
-make verify         # lint + test + build (CI parity)
+make verify         # complete local CI parity
 make logos          # regenerate logo-lockup-2b.png from SVG
 ```
 

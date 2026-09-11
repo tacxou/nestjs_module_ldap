@@ -10,7 +10,12 @@ NPX         ?= npx
 ASSETS_DIR  := docs/assets
 RESVG       := $(NPX) --yes @resvg/resvg-js-cli
 
-.PHONY: help install install-ci build clean lint format check test test-coverage verify logos ncu ncu-upgrade
+VERSION ?=
+CHANNEL ?= latest
+WATCH ?=
+YES ?=
+
+.PHONY: help install install-ci build clean lint typecheck format check test test-coverage test-scripts docs docs-build docs-preview changelog-build changelog-check package release release-status verify logos ncu ncu-upgrade
 
 .DEFAULT_GOAL := help
 
@@ -26,6 +31,9 @@ install-ci: ## Install dependencies with frozen lockfile (CI parity)
 
 build: ## Compile TypeScript to dist/
 	$(YARN) build
+
+typecheck: ## Type-check library and tests without emitting files
+	$(YARN) typecheck
 
 clean: ## Remove dist/ and coverage/
 	$(YARN) rimraf dist coverage
@@ -45,7 +53,34 @@ test: ## Run unit tests
 test-coverage: ## Run tests with coverage report
 	$(YARN) test:coverage
 
-verify: lint test build ## Run lint, test and build (local CI parity)
+test-scripts: ## Test changelog, packaging and release tooling
+	$(YARN) test:scripts
+
+docs: ## Start the VitePress documentation site
+	$(YARN) docs:dev
+
+docs-build: ## Build the VitePress documentation site
+	$(YARN) docs:build
+
+docs-preview: ## Preview the built documentation site
+	$(YARN) docs:preview
+
+changelog-build: ## Generate CHANGELOG.md from versioned sources
+	$(YARN) changelog:build
+
+changelog-check: ## Verify CHANGELOG.md is synchronized
+	$(YARN) changelog:check
+
+package: ## Build and audit the npm tarball in .artifacts/npm/
+	$(YARN) package
+
+release: ## Dispatch release.yml (VERSION=X.Y.Z [CHANNEL=latest|next] [WATCH=1] [YES=1])
+	$(YARN) release --version "$(VERSION)" --channel "$(CHANNEL)" $(if $(strip $(WATCH)),--watch,) $(if $(strip $(YES)),--yes,)
+
+release-status: ## Show the latest Release workflow runs
+	gh run list --workflow release.yml --limit 5
+
+verify: lint typecheck test-coverage test-scripts build docs-build changelog-check package ## Run full CI parity
 
 logos: ## Regenerate logo-lockup-2b.png from SVG (GitHub README)
 	$(RESVG) --fit-width 1120 $(ASSETS_DIR)/logo-lockup-2b.svg $(ASSETS_DIR)/logo-lockup-2b.png

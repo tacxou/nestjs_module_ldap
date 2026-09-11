@@ -11,12 +11,13 @@ pour intégrer LDAP via [ldapts](https://github.com/ldapts/ldapts). Il expose
 
 ## 0. Règle absolue — Git
 
-🚫 **Claude ne doit JAMAIS `git commit` ni `git push` de lui-même.**
+🚫 **Claude ne doit jamais `git commit` ni `git push` sans demande ou approbation explicite.**
 
-- Préparer les modifications (édition de fichiers), proposer un message de commit si utile,
-  puis **laisser l'utilisateur committer et pousser lui-même**.
-- Cette règle s'applique même si l'utilisateur a précédemment approuvé un commit : chaque
-  commit/push reste une action manuelle de l'utilisateur.
+- Une demande d'exécution explicite peut autoriser les commits et pushes décrits dans un plan
+  approuvé. Toute opération supplémentaire demande une nouvelle autorisation.
+- Toujours annoncer le message Conventional Commit et les contrôles réalisés.
+- Les pushes forcés, le contournement des hooks (`--no-verify`) et les opérations Git
+  destructives restent interdits.
 - **Format des messages** : Conventional Commits 1.0.0 — voir
   `docs/conventions/conventional-commits.md` (types, scopes, exemples).
   Sujet en anglais : `type(scope): description impérative`, ≤ 72 caractères, sans point final.
@@ -56,11 +57,15 @@ nestjs_module_ldap/
 À la fin de **toute** modification de code, avant de présenter le travail comme
 terminé, lancer et faire passer au vert :
 
-1. **Build TypeScript** :
+1. **Typecheck TypeScript** :
+   ```bash
+   yarn typecheck
+   ```
+2. **Build TypeScript** :
    ```bash
    yarn build
    ```
-2. **Lint** :
+3. **Lint** :
    ```bash
    yarn lint
    ```
@@ -108,6 +113,6 @@ Respecter strictement les conventions TypeScript et NestJS.
 
 ## 5. Publication
 
-- Publication npm déclenchée par une **release GitHub** (workflow `.github/workflows/ci.yml`).
+- Publication npm déclenchée par le workflow manuel `.github/workflows/release.yml`.
 - Le champ `version` de `package.json` doit rester aligné avec la release SemVer.
-- Le script `postbuild` copie `README.md`, `LICENSE` et `package.json` dans `dist/`.
+- `yarn package` construit et audite le tarball dans `.artifacts/npm/`.

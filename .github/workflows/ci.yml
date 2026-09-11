@@ -12,19 +12,22 @@ on:
       - 'feature*'
   pull_request:
     branches: [main]
+  workflow_call:
+  workflow_dispatch:
 
 jobs:
-  test:
+  quality:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '22'
+          cache: yarn
 
       - name: Enable Corepack
         run: corepack enable
@@ -35,11 +38,20 @@ jobs:
       - name: Lint
         run: yarn lint
 
+      - name: Type-check
+        run: yarn typecheck
+
       - name: Run tests with coverage
         run: yarn test:coverage
 
+      - name: Test project tooling
+        run: yarn test:scripts
+
+      - name: Verify generated changelog
+        run: yarn changelog:check
+
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@0fb7174895f61a3b6b78fc075e0cd60383518dac # v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: tacxou/nestjs_module_ldap
@@ -50,16 +62,17 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: test
+    needs: quality
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: '22'
+          cache: yarn
 
       - name: Enable Corepack
         run: corepack enable
@@ -69,3 +82,9 @@ jobs:
 
       - name: Build project
         run: yarn build
+
+      - name: Build documentation
+        run: yarn docs:build
+
+      - name: Build and audit npm tarball
+        run: yarn package:check

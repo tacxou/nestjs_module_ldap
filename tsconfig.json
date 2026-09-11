@@ -12,10 +12,10 @@
     "outDir": "dist",
     "rootDir": "src",
     "noLib": false,
-    "incremental": true,
+    "strict": true,
     "moduleResolution": "bundler",
     "esModuleInterop": true,
-    "tsBuildInfoFile": "dist/.tsbuildinfo"
+    "inlineSources": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
