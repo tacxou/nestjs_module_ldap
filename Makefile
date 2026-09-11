@@ -13,7 +13,6 @@ RESVG       := $(NPX) --yes @resvg/resvg-js-cli
 VERSION ?=
 CHANNEL ?= latest
 WATCH ?=
-YES ?=
 
 .PHONY: help install install-ci build clean lint typecheck format check test test-coverage test-scripts docs docs-build docs-preview changelog-build changelog-check package release release-status verify logos ncu ncu-upgrade
 
@@ -74,8 +73,8 @@ changelog-check: ## Verify CHANGELOG.md is synchronized
 package: ## Build and audit the npm tarball in .artifacts/npm/
 	$(YARN) package
 
-release: ## Dispatch release.yml (VERSION=X.Y.Z [CHANNEL=latest|next] [WATCH=1] [YES=1])
-	$(YARN) release --version "$(VERSION)" --channel "$(CHANNEL)" $(if $(strip $(WATCH)),--watch,) $(if $(strip $(YES)),--yes,)
+release: ## Dispatch release.yml (VERSION=X.Y.Z [CHANNEL=latest|next] [WATCH=1])
+	$(YARN) release --version "$(VERSION)" --channel "$(CHANNEL)" $(if $(strip $(WATCH)),--watch,)
 
 release-status: ## Show the latest Release workflow runs
 	gh run list --workflow release.yml --limit 5
