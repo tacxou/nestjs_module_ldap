@@ -1,19 +1,26 @@
 # Security Policy
 
-## Supported Versions
+## Supported versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+Security fixes are provided for the latest published `1.x` release.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.x.x   | :white_check_mark: |
-| 0.x.x   | :x:                |
+| Version | Supported |
+| --- | --- |
+| Latest `1.x` | Yes |
+| Earlier `1.x` | No |
+| `0.x` | No |
 
-## Reporting a Vulnerability
+## Report a vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Do not open a public issue for a suspected vulnerability. Use GitHub's private
+[security advisory form](https://github.com/FicSysFR/nestjs_module_ldap/security/advisories/new)
+and include:
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+- the affected package version;
+- a minimal reproduction or proof of concept;
+- the expected impact;
+- any known workaround.
+
+The maintainers will acknowledge a complete report within seven days, assess its
+severity, and coordinate remediation and disclosure with the reporter. Never
+include production LDAP credentials, directory data, or access tokens.

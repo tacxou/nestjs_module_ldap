@@ -114,7 +114,7 @@ function smokeTest(tarballPath, packageName) {
     )
     writeFileSync(
       join(temporaryProject, 'commonjs.cjs'),
-      `const { LdapModule } = require('${packageName}')\nconst { LDAP_MODULE_OPTIONS_TOKEN } = require('${packageName}/dist/ldap.constants.js')\nif (typeof LdapModule !== 'function' || LDAP_MODULE_OPTIONS_TOKEN !== 'LdapModuleOptionsToken') process.exit(1)\n`,
+      `const { LdapModule } = require('${packageName}')\nconst deepIndex = require('${packageName}/dist/index')\nconst { LDAP_MODULE_OPTIONS_TOKEN } = require('${packageName}/dist/ldap.constants.js')\nif (typeof LdapModule !== 'function' || deepIndex.LdapModule !== LdapModule || LDAP_MODULE_OPTIONS_TOKEN !== 'LdapModuleOptionsToken') process.exit(1)\n`,
     )
     writeFileSync(
       join(temporaryProject, 'consumer.ts'),

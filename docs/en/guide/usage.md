@@ -4,7 +4,7 @@
 
 ```ts
 import { Module } from '@nestjs/common'
-import { LdapModule } from '@tacxou/nestjs_module_ldap'
+import { LdapModule } from '@ficsysfr/nestjs_module_ldap'
 
 @Module({
   imports: [
@@ -28,7 +28,7 @@ export class AppModule {}
 
 ```ts
 import { Injectable } from '@nestjs/common'
-import { InjectLdap, LdapManager } from '@tacxou/nestjs_module_ldap'
+import { InjectLdap, LdapManager } from '@ficsysfr/nestjs_module_ldap'
 
 @Injectable()
 export class DirectoryService {

@@ -8,16 +8,17 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@tacxou/nestjs_module_ldap"><img src="https://img.shields.io/npm/v/%40tacxou%2Fnestjs_module_ldap.svg" alt="NPM Version" /></a>
-  <a href="https://github.com/tacxou/nestjs_module_ldap/blob/main/LICENSE"><img src="https://img.shields.io/github/license/tacxou/nestjs_module_ldap" alt="Package License" /></a>
-  <a href="https://www.npmjs.com/package/@tacxou/nestjs_module_ldap"><img src="https://img.shields.io/npm/dm/%40tacxou%2Fnestjs_module_ldap.svg" alt="NPM Downloads" /></a>
-  <a href="https://github.com/tacxou/nestjs_module_ldap/actions/workflows/ci.yml"><img src="https://github.com/tacxou/nestjs_module_ldap/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
-  <a href="https://codecov.io/gh/tacxou/nestjs_module_ldap"><img src="https://codecov.io/gh/tacxou/nestjs_module_ldap/graph/badge.svg?token=f16RTFlxTY" alt="codecov" /></a>
+  <a href="https://www.npmjs.com/package/@ficsysfr/nestjs_module_ldap"><img src="https://img.shields.io/npm/v/%40ficsysfr%2Fnestjs_module_ldap.svg" alt="NPM Version" /></a>
+  <a href="https://github.com/FicSysFR/nestjs_module_ldap/blob/main/LICENSE"><img src="https://img.shields.io/github/license/FicSysFR/nestjs_module_ldap" alt="Package License" /></a>
+  <a href="https://www.npmjs.com/package/@ficsysfr/nestjs_module_ldap"><img src="https://img.shields.io/npm/dm/%40ficsysfr%2Fnestjs_module_ldap.svg" alt="NPM Downloads" /></a>
+  <a href="https://github.com/FicSysFR/nestjs_module_ldap/actions/workflows/ci.yml"><img src="https://github.com/FicSysFR/nestjs_module_ldap/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://codecov.io/gh/FicSysFR/nestjs_module_ldap"><img src="https://codecov.io/gh/FicSysFR/nestjs_module_ldap/graph/badge.svg" alt="Codecov" /></a>
+  <a href="https://ficsysfr.github.io/nestjs_module_ldap/"><img src="https://img.shields.io/badge/docs-FR%20%7C%20EN-e0234e" alt="Documentation" /></a>
 </p>
 
 ## Overview
 
-`@tacxou/nestjs_module_ldap` registers one or more LDAP connections inside a NestJS
+`@ficsysfr/nestjs_module_ldap` registers one or more LDAP connections inside a NestJS
 application. It wraps [ldapts](https://github.com/ldapts/ldapts) clients in a
 `LdapManager`, exposes them through Nest dependency injection, and optionally
 performs an initial bind when the module boots.
@@ -27,9 +28,9 @@ performs an initial bind when the module boots.
 Install the library together with its peer dependencies:
 
 ```bash
-npm install @tacxou/nestjs_module_ldap ldapts
+npm install @ficsysfr/nestjs_module_ldap ldapts
 # or
-yarn add @tacxou/nestjs_module_ldap ldapts
+yarn add @ficsysfr/nestjs_module_ldap ldapts
 ```
 
 Supported NestJS versions: `^6`, `^7`, `^8`, `^9`, `^10`, and `^11`.
@@ -40,7 +41,7 @@ Register the module in your root `AppModule` with synchronous configuration:
 
 ```typescript
 import { Module } from '@nestjs/common'
-import { LdapModule } from '@tacxou/nestjs_module_ldap'
+import { LdapModule } from '@ficsysfr/nestjs_module_ldap'
 
 @Module({
   imports: [
@@ -68,7 +69,7 @@ Inject the manager anywhere in your application:
 
 ```typescript
 import { Injectable } from '@nestjs/common'
-import { InjectLdap, LdapManager } from '@tacxou/nestjs_module_ldap'
+import { InjectLdap, LdapManager } from '@ficsysfr/nestjs_module_ldap'
 
 @Injectable()
 export class UsersService {
@@ -130,7 +131,7 @@ Use with `@nestjs/config`, a secrets manager, or any async provider.
 
 ```typescript
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { LdapModule } from '@tacxou/nestjs_module_ldap'
+import { LdapModule } from '@ficsysfr/nestjs_module_ldap'
 import type { ClientOptions } from 'ldapts'
 
 @Module({
@@ -165,7 +166,7 @@ You can also delegate option building to a dedicated factory class:
 
 ```typescript
 import { Injectable } from '@nestjs/common'
-import type { LdapModuleOptions, LdapModuleOptionsFactory } from '@tacxou/nestjs_module_ldap'
+import type { LdapModuleOptions, LdapModuleOptionsFactory } from '@ficsysfr/nestjs_module_ldap'
 
 @Injectable()
 export class LdapConfigService implements LdapModuleOptionsFactory {

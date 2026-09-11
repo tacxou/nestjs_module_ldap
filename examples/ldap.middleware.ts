@@ -1,7 +1,7 @@
 import { CipherCCMTypes, CipherGCMTypes, createDecipheriv } from 'node:crypto'
+import { InjectLdap, LdapManager } from '@ficsysfr/nestjs_module_ldap'
 import { Injectable, NestMiddleware, Scope } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { InjectLdap, LdapManager } from '@tacxou/nestjs_module_ldap'
 import { NextFunction, Request, Response } from 'express'
 
 @Injectable({ scope: Scope.REQUEST })

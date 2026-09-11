@@ -2,7 +2,7 @@
 
 ## Produit
 
-- Objectif : fournir `@tacxou/nestjs_module_ldap`, un module NestJS réutilisable
+- Objectif : fournir `@ficsysfr/nestjs_module_ldap`, un module NestJS réutilisable
   pour déclarer, nommer et injecter des connexions LDAP basées sur `ldapts`.
 - Utilisateurs : développeurs d'applications NestJS intégrant un annuaire LDAP.
 - Contraintes métier majeures : préserver l'API publique et la compatibilité avec

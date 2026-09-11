@@ -1,4 +1,4 @@
-# Branding — `@tacxou/nestjs_module_ldap`
+# Branding — `@ficsysfr/nestjs_module_ldap`
 
 Visual identity for the package. **Canonical source:** the versioned assets in
 [`docs/assets/`](assets/logo-lockup-2b.svg).

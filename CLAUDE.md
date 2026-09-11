@@ -3,7 +3,7 @@
 Ce fichier fait foi pour toute contribution de Claude Code sur ce dépôt. Les règles
 ci-dessous sont **impératives** et priment sur les habitudes par défaut.
 
-`@tacxou/nestjs_module_ldap` est un **module NestJS** (bibliothèque npm)
+`@ficsysfr/nestjs_module_ldap` est un **module NestJS** (bibliothèque npm)
 pour intégrer LDAP via [ldapts](https://github.com/ldapts/ldapts). Il expose
 `LdapModule`, `LdapManager`, le décorateur `@InjectLdap()` et les utilitaires associés.
 
@@ -107,7 +107,7 @@ Respecter strictement les conventions TypeScript et NestJS.
 
 - Code illustratif pour les consommateurs du module (middleware, stratégies, etc.).
 - Non inclus dans le build npm (`rootDir: src` uniquement).
-- Peut importer `@tacxou/nestjs_module_ldap` comme le ferait une application hôte.
+- Peut importer `@ficsysfr/nestjs_module_ldap` comme le ferait une application hôte.
 
 ---
 

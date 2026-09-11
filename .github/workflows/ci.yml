@@ -54,7 +54,7 @@ jobs:
         uses: codecov/codecov-action@0fb7174895f61a3b6b78fc075e0cd60383518dac # v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: tacxou/nestjs_module_ldap
+          slug: FicSysFR/nestjs_module_ldap
           files: ./coverage/lcov.info
           flags: unittests
           name: codecov-umbrella

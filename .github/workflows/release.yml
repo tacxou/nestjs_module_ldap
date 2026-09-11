@@ -1,56 +1,62 @@
 name: Release
 
-permissions:
-  contents: write
-
 on:
   workflow_dispatch:
     inputs:
-      version_increment:
-        description: 'La version a incrementer (major, minor, patch)'
+      version:
+        description: Exact SemVer version to release
         required: true
-        default: 'patch'
+        type: string
+      channel:
+        description: npm distribution channel
+        required: true
+        default: latest
         type: choice
         options:
-          - 'major'
-          - 'minor'
-          - 'patch'
+          - latest
+          - next
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.repository }}
+  cancel-in-progress: false
 
 jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
   release:
+    needs: ci
     runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: write
+      id-token: write
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout main
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 0
+          ref: main
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: '22'
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
 
-      - name: Bump package.json version
-        run: npm version ${{ inputs.version_increment }} --no-git-tag-version
-
-      - name: Read new version
-        id: version
-        run: echo "value=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
-
-      - name: Commit version bump
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: 'chore(release): bump version to ${{ steps.version.outputs.value }}'
-          file_pattern: package.json
-
-      - name: Create and push tag
-        id: tag
+      - name: Require npm 11.5.1 or newer
+        shell: bash
         run: |
-          tag="v${{ steps.version.outputs.value }}"
-          echo "value=$tag" >> $GITHUB_OUTPUT
-          git tag "$tag"
-          git push origin "$tag"
+          set -euo pipefail
+          npm install --global npm@11
+          npm_version="$(npm --version)"
+          node -e "const [major, minor] = process.argv[1].split('.').map(Number); if (major < 11 || (major === 11 && minor < 5)) process.exit(1)" "$npm_version"
+          echo "npm $npm_version"
 
       - name: Enable Corepack
         run: corepack enable
@@ -58,25 +64,184 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Run tests
-        run: yarn test
+      - name: Configure release identity
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
 
-      - name: Build project
-        run: yarn build
-
-      - name: Setup Node.js for NPM
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Publish to npm
-        run: npm publish --access public
+      - name: Prepare or resume release state
+        id: state
+        shell: bash
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          VERSION: ${{ inputs.version }}
+          CHANNEL: ${{ inputs.channel }}
+        run: |
+          set -euo pipefail
+          if git ls-remote --exit-code origin "refs/tags/$VERSION" >/dev/null 2>&1; then
+            git fetch origin "refs/tags/$VERSION:refs/tags/$VERSION"
+            git checkout --detach "$VERSION"
+            node scripts/release-state.mjs verify --version "$VERSION" --channel "$CHANNEL"
+            echo "existing=true" >> "$GITHUB_OUTPUT"
+          else
+            node scripts/release-state.mjs prepare --version "$VERSION" --channel "$CHANNEL"
+            git add package.json
+            if ! git diff --cached --quiet; then
+              git commit -m "chore(release): $VERSION"
+            fi
+            echo "existing=false" >> "$GITHUB_OUTPUT"
+          fi
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.tag.outputs.value }}
-          generate_release_notes: true
+      - name: Synchronize with main
+        if: steps.state.outputs.existing == 'false'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          if ! git merge-base --is-ancestor origin/main HEAD; then
+            git rebase origin/main
+          fi
+
+      - name: Reinstall synchronized dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Verify release and build artifact
+        env:
+          VERSION: ${{ inputs.version }}
+          CHANNEL: ${{ inputs.channel }}
+        run: |
+          node scripts/release-state.mjs verify --version "$VERSION" --channel "$CHANNEL"
+          yarn lint
+          yarn typecheck
+          yarn test:coverage
+          yarn test:scripts
+          yarn build
+          yarn docs:build
+          yarn changelog:check
+          yarn package
+
+      - name: Push release commit and tag atomically
+        if: steps.state.outputs.existing == 'false'
+        shell: bash
+        env:
+          VERSION: ${{ inputs.version }}
+          CHANNEL: ${{ inputs.channel }}
+        run: |
+          set -euo pipefail
+
+          revalidate() {
+            yarn install --frozen-lockfile
+            node scripts/release-state.mjs verify --version "$VERSION" --channel "$CHANNEL"
+            yarn lint
+            yarn typecheck
+            yarn test:coverage
+            yarn test:scripts
+            yarn build
+            yarn docs:build
+            yarn changelog:check
+            yarn package
+          }
+
+          pushed=false
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git merge-base --is-ancestor origin/main HEAD; then
+              git rebase origin/main
+              revalidate
+            fi
+
+            if git ls-remote --exit-code origin "refs/tags/$VERSION" >/dev/null 2>&1; then
+              git fetch origin "refs/tags/$VERSION"
+              if [ "$(git rev-parse 'FETCH_HEAD^{commit}')" != "$(git rev-parse HEAD)" ]; then
+                echo "Tag $VERSION already targets another commit" >&2
+                exit 1
+              fi
+              pushed=true
+              break
+            fi
+
+            git tag -d "$VERSION" >/dev/null 2>&1 || true
+            git tag "$VERSION" HEAD
+            if git push --atomic origin HEAD:refs/heads/main "refs/tags/$VERSION"; then
+              pushed=true
+              break
+            fi
+            echo "Atomic push attempt $attempt failed" >&2
+            sleep 2
+          done
+
+          if [ "$pushed" != true ]; then
+            echo "Atomic release push failed after three attempts" >&2
+            exit 1
+          fi
+
+      - name: Locate release artifact
+        id: artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          tarball="$(find .artifacts/npm -maxdepth 1 -type f -name '*.tgz' -print -quit)"
+          test -n "$tarball"
+          echo "path=$tarball" >> "$GITHUB_OUTPUT"
+          echo "name=$(basename "$tarball")" >> "$GITHUB_OUTPUT"
+          echo "checksum=.artifacts/npm/SHA256SUMS.txt" >> "$GITHUB_OUTPUT"
+
+      - name: Publish or verify npm package
+        shell: bash
+        env:
+          VERSION: ${{ inputs.version }}
+          CHANNEL: ${{ inputs.channel }}
+          TARBALL: ${{ steps.artifact.outputs.path }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_BOOTSTRAP_TOKEN }}
+        run: |
+          set -euo pipefail
+          package_name="$(node -p "require('./package.json').name")"
+          local_integrity="$(node -e "const fs=require('node:fs');const crypto=require('node:crypto');process.stdout.write('sha512-'+crypto.createHash('sha512').update(fs.readFileSync(process.env.TARBALL)).digest('base64'))")"
+
+          set +e
+          published_integrity="$(npm view "$package_name@$VERSION" dist.integrity 2>/dev/null)"
+          view_status=$?
+          set -e
+
+          if [ "$view_status" -eq 0 ] && [ -n "$published_integrity" ]; then
+            if [ "$published_integrity" != "$local_integrity" ]; then
+              echo "Published npm integrity differs from the release tarball" >&2
+              exit 1
+            fi
+          else
+            npm publish "$TARBALL" --access public --tag "$CHANNEL" --provenance
+          fi
+
+          actual_integrity="$(npm view "$package_name@$VERSION" dist.integrity)"
+          actual_tag="$(npm view "$package_name" "dist-tags.$CHANNEL")"
+          test "$actual_integrity" = "$local_integrity"
+          test "$actual_tag" = "$VERSION"
+
+      - name: Create or update GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          CHANNEL: ${{ inputs.channel }}
+          TARBALL: ${{ steps.artifact.outputs.path }}
+          CHECKSUM: ${{ steps.artifact.outputs.checksum }}
+        run: |
+          set -euo pipefail
+          notes="$RUNNER_TEMP/release-notes.md"
+          node scripts/build-changelog.mjs --release-notes "$VERSION" --out "$notes"
+
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            gh release edit "$VERSION" --title "$VERSION" --notes-file "$notes"
+            if [ "$CHANNEL" = latest ]; then
+              gh release edit "$VERSION" --latest
+            fi
+          else
+            args=("$VERSION" --title "$VERSION" --notes-file "$notes" --verify-tag)
+            if [ "$CHANNEL" = next ]; then
+              args+=(--prerelease)
+            else
+              args+=(--latest)
+            fi
+            gh release create "${args[@]}"
+          fi
+
+          gh release upload "$VERSION" "$TARBALL" "$CHECKSUM" --clobber

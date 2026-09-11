@@ -1,8 +1,22 @@
 {
-  "name": "@tacxou/nestjs_module_ldap",
+  "name": "@ficsysfr/nestjs_module_ldap",
   "version": "1.0.1",
-  "description": "LDAP module for NestJS Framework",
-  "repository": "https://github.com/tacxou/nestjs_module_ldap.git",
+  "description": "LDAP module for NestJS built on ldapts",
+  "repository": "https://github.com/FicSysFR/nestjs_module_ldap.git",
+  "homepage": "https://ficsysfr.github.io/nestjs_module_ldap/",
+  "bugs": {
+    "url": "https://github.com/FicSysFR/nestjs_module_ldap/issues"
+  },
+  "keywords": [
+    "ldap",
+    "ldapts",
+    "nestjs",
+    "typescript",
+    "nodejs",
+    "dependency-injection",
+    "directory-services",
+    "npm-package"
+  ],
   "author": "tacxou <12997062+tacxou@users.noreply.github.com> (https://github.com/tacxou)",
   "contributors": [
     {
@@ -12,7 +26,7 @@
     },
     {
       "name": "Contributors",
-      "url": "https://github.com/tacxou/nestjs_module_ldap/graphs/contributors"
+      "url": "https://github.com/FicSysFR/nestjs_module_ldap/graphs/contributors"
     }
   ],
   "license": "MIT",
@@ -66,6 +80,12 @@
       "import": "./dist/ldap.utils.js",
       "require": "./dist/ldap.utils.js",
       "default": "./dist/ldap.utils.js"
+    },
+    "./dist/*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.js",
+      "require": "./dist/*.js",
+      "default": "./dist/*.js"
     },
     "./dist/*.js": {
       "types": "./dist/*.d.ts",

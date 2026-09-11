@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 import llmstxt from 'vitepress-plugin-llms'
 
-const repository = 'https://github.com/tacxou/nestjs_module_ldap'
+const repository = 'https://github.com/FicSysFR/nestjs_module_ldap'
 const base = process.env.NODE_ENV === 'production' ? '/nestjs_module_ldap/' : '/'
 
 const frenchGuide = [
@@ -27,7 +27,7 @@ export default defineConfig({
   vite: {
     plugins: [
       ...(llmstxt({
-        domain: 'https://tacxou.github.io',
+        domain: 'https://ficsysfr.github.io',
         title: 'NestJS LDAP Module',
         description: 'NestJS LDAP module built on ldapts.',
         details: 'Configure named LDAP connections, inject clients, and use typed helpers in NestJS applications.',
@@ -44,7 +44,7 @@ export default defineConfig({
         nav: [
           { text: 'Guide', link: '/guide/installation' },
           { text: 'API', link: '/guide/api' },
-          { text: 'npm', link: 'https://www.npmjs.com/package/@tacxou/nestjs_module_ldap' },
+          { text: 'npm', link: 'https://www.npmjs.com/package/@ficsysfr/nestjs_module_ldap' },
         ],
         sidebar: [{ text: 'Guide', items: frenchGuide }],
         outline: { level: [2, 3], label: 'Sur cette page' },
@@ -67,7 +67,7 @@ export default defineConfig({
         nav: [
           { text: 'Guide', link: '/en/guide/installation' },
           { text: 'API', link: '/en/guide/api' },
-          { text: 'npm', link: 'https://www.npmjs.com/package/@tacxou/nestjs_module_ldap' },
+          { text: 'npm', link: 'https://www.npmjs.com/package/@ficsysfr/nestjs_module_ldap' },
         ],
         sidebar: [{ text: 'Guide', items: englishGuide }],
         editLink: { pattern: `${repository}/edit/main/docs/:path`, text: 'Edit this page' },

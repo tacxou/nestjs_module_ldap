@@ -103,6 +103,9 @@ export function parseEntry(content, fileName) {
   if (metadata.previous) {
     parseVersion(metadata.previous)
   }
+  if (metadata.repository && !/^https:\/\/github\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(metadata.repository)) {
+    throw new Error(`${fileName}: repository must be a canonical GitHub URL`)
+  }
 
   const isPrerelease = parseVersion(metadata.version).prerelease.length > 0
   if (metadata.prerelease !== undefined && !['true', 'false'].includes(metadata.prerelease)) {
@@ -123,6 +126,7 @@ export function parseEntry(content, fileName) {
     title: metadata.title,
     tag: metadata.tag || metadata.version,
     previous: metadata.previous,
+    repository: metadata.repository,
     prerelease: isPrerelease,
     body,
   }
@@ -141,14 +145,15 @@ export function buildArtifacts(entries, repository) {
   const byVersion = new Map(ordered.map((entry) => [entry.version, entry]))
   const sections = ordered.map((entry) => `## [${entry.version}] - ${entry.date}\n\n### ${entry.title}\n\n${entry.body}`)
   const links = ordered.map((entry) => {
+    const entryRepository = entry.repository || repository
     if (!entry.previous) {
-      return `[${entry.version}]: ${repository}/releases/tag/${entry.tag}`
+      return `[${entry.version}]: ${entryRepository}/releases/tag/${entry.tag}`
     }
     const previous = byVersion.get(entry.previous)
     if (!previous) {
       throw new Error(`${entry.version}: previous version ${entry.previous} is missing`)
     }
-    return `[${entry.version}]: ${repository}/compare/${previous.tag}...${entry.tag}`
+    return `[${entry.version}]: ${entryRepository}/compare/${previous.tag}...${entry.tag}`
   })
 
   return `# Changelog\n\nAll notable changes to this project are documented in this file.\n\n${sections.join('\n\n')}\n\n${links.join('\n')}\n`

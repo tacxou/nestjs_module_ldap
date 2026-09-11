@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.0.2] - 2026-09-11
+
+### Migration to FicSysFR
+
+- Moved the canonical repository to `FicSysFR/nestjs_module_ldap`.
+- Published the package under the `@ficsysfr` scope while preserving the NestJS and `ldapts` API.
+- Added audited release packaging, bilingual documentation, and npm trusted-publishing support.
+
 ## [1.0.1] - 2026-07-11
 
 ### Release metadata correction
@@ -32,7 +40,8 @@ All notable changes to this project are documented in this file.
 - Added the initial module, decorators, interfaces, constants, and LDAP connection utilities.
 - Historical source: [0.0.1](https://github.com/The-Software-Compagny/nestjs_module_ldap/commits/0.0.1).
 
+[1.0.2]: https://github.com/FicSysFR/nestjs_module_ldap/compare/v1.0.1...1.0.2
 [1.0.1]: https://github.com/tacxou/nestjs_module_ldap/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/tacxou/nestjs_module_ldap/compare/0.0.2...v1.0.0
-[0.0.2]: https://github.com/tacxou/nestjs_module_ldap/compare/0.0.1...0.0.2
-[0.0.1]: https://github.com/tacxou/nestjs_module_ldap/releases/tag/0.0.1
+[0.0.2]: https://github.com/The-Software-Compagny/nestjs_module_ldap/compare/0.0.1...0.0.2
+[0.0.1]: https://github.com/The-Software-Compagny/nestjs_module_ldap/releases/tag/0.0.1

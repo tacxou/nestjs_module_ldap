@@ -9,7 +9,7 @@
 ## Installer le paquet
 
 ```bash
-yarn add @tacxou/nestjs_module_ldap ldapts
+yarn add @ficsysfr/nestjs_module_ldap ldapts
 ```
 
 Le paquet est CommonJS. `require()` fonctionne nativement et les imports ESM nommés sont pris en charge par l’interopérabilité de Node.js. Les déclarations TypeScript sont incluses.

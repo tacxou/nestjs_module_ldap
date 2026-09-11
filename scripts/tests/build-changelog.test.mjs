@@ -23,3 +23,17 @@ test('buildArtifacts orders entries and preserves historical tags', () => {
   assert.match(output, /compare\/v1\.0\.0\.\.\.v1\.0\.1/)
   assert.equal(renderReleaseNotes(newer), '# 1.0.1 — Second\n\n- Second.\n')
 })
+
+test('buildArtifacts keeps a release-specific historical repository', () => {
+  const entry = {
+    version: '0.0.1',
+    date: '2025-01-20',
+    title: 'Preview',
+    tag: '0.0.1',
+    repository: 'https://github.com/historical/project',
+    body: '- Preview.',
+    prerelease: false,
+  }
+  const output = buildArtifacts([entry], 'https://github.com/current/project')
+  assert.match(output, /https:\/\/github\.com\/historical\/project\/releases\/tag\/0\.0\.1/)
+})
